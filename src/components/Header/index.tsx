@@ -1,18 +1,14 @@
 import React, { useContext } from 'react';
 import Switch from 'react-switch';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 import { Container, WrapMenu, ItemMenu } from './styles';
 
 import pokeball_icon from '../../assets/pokeball_icon.png';
 import logo_pokedex from '../../assets/logo_pokedex.svg';
 
-interface HeaderProps {
-  toggleTheme(): void
-}
-
-function Header(props: HeaderProps) {
-  const { title, colors } = useContext(ThemeContext);
+function Header() {
+  const context = useContext(ThemeContext);
 
   return (
     <Container>
@@ -36,11 +32,11 @@ function Header(props: HeaderProps) {
               checkedIcon={false}
               uncheckedIcon={false}
               
-              onColor={colors.switch.on}
-              offColor={colors.switch.off}
+              onColor={context?.theme.colors.switch.on}
+              offColor={context?.theme.colors.switch.off}
               
-              onChange={props.toggleTheme}
-              checked={title === 'dark'}
+              onChange={e => context?.toggleTheme()}
+              checked={context?.theme.title === 'dark'}
             />
           </li>
         </WrapMenu>
