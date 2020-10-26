@@ -14,9 +14,9 @@ type ThemeProviderProps = {
   children: ReactNode;
 }
 
-export const ThemeContext = createContext<ContextValue | undefined>(void 0);
+const ThemeContext = createContext<ContextValue | undefined>(void 0);
 
-export function AppThemeProvider(props: ThemeProviderProps) {
+function AppThemeProvider(props: ThemeProviderProps) {
   const { children } = props;
   const [theme, setTheme] = usePeristedState<DefaultTheme>('theme', dark);
 
@@ -34,3 +34,5 @@ export function AppThemeProvider(props: ThemeProviderProps) {
     </ThemeContext.Provider>
   );
 }
+
+export { ThemeContext, AppThemeProvider };
