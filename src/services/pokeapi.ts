@@ -1,13 +1,7 @@
-import { useContext } from 'react';
 import axios from 'axios';
 
-import { PokemonContext } from '../contexts/PokemonContext';
+const api = axios.create({
+  baseURL: 'https://pokeapi.co/api/v2/' 
+});
 
-export function fetchPokemons() {
-  const context = useContext(PokemonContext);
-
-  axios.get("https://pokeapi.co/api/v2/pokemon").then(res => {
-    
-    context?.
-  });
-}
+export default api;

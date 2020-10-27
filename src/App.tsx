@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppThemeProvider } from './contexts/ThemeContext';
-import { PokemonProvider } from './contexts/PokemonContext';
 
 import Header from './components/Header';
 import PokemonsList from './components/PokemonsList';
@@ -13,9 +12,8 @@ function App() {
       <div className="App">
         <GlobalStyle />
         <Header />
-        <PokemonProvider>
-          <PokemonsList />
-        </PokemonProvider>
+        
+        <PokemonsList />
       </div>
     </AppThemeProvider>
   );

@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode } from 'react';
+import React, { createContext } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import usePeristedState from '../utils/usePersistedState';
 
@@ -10,14 +10,10 @@ type ContextValue = {
   toggleTheme: Function;
 }
 
-type ThemeProviderProps = {
-  children: ReactNode;
-}
-
 const ThemeContext = createContext<ContextValue | undefined>(void 0);
 
-function AppThemeProvider(props: ThemeProviderProps) {
-  const { children } = props;
+const AppThemeProvider: React.FC = ({ children }) => {
+  
   const [theme, setTheme] = usePeristedState<DefaultTheme>('theme', dark);
 
   const toggleTheme = () => {

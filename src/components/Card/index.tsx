@@ -1,17 +1,16 @@
 import React from 'react';
 
 interface CardProps {
-  pokemon: {
-    id: number;
-    name: string;
-  };
+  name: string;
+  url: string;
+  pathImage: string;
 }
 
-export default function Card({ pokemon }: CardProps) {  
+export default function Card({ name, pathImage, url}: CardProps) {  
   return (
-    <li key={pokemon.id}>
-      <img src="https:///" alt={`image: ${pokemon.name}`} />
-      <h2>{pokemon.name}</h2>
+    <li key={name}>
+      <img src={pathImage} alt={`${name}`} />
+      <h2>{name}</h2>
     </li>
   );
 }
