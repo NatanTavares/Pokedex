@@ -4,7 +4,7 @@ export const CardTemplate = styled.li`
   display: flex;
   justify-content: center;
   
-  background-color: #67A88F;
+  background-color: ${props => props.theme.colors.card};
   width: 163px;
   height: 137px;
   border-radius: 20px;

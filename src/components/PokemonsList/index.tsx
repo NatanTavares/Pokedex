@@ -4,7 +4,7 @@ import api from '../../services/pokeapi';
 
 import Card from '../Card';
 
-import { CardsArea } from './styles';
+import { CardsArea, CardsAreaBackground } from './styles';
 
 interface IPokemon {
   name: string,
@@ -41,7 +41,6 @@ export default function PokemonsList() {
       const newPokemons = response.data.results.map(pokemon => pokemon);
       
       setPokemons([...pokemons, ...newPokemons]);
-      console.log('> Pokemons:', pokemons);
     });
 
     return () => cancel();
@@ -54,9 +53,13 @@ export default function PokemonsList() {
   if (loading) return <h1>Loading...</h1>;
 
   return (
-    <CardsArea>
-      {pokemons.map(pokemon => <Card key={pokemon.name} {...pokemon} /> )}
-      <button onClick={fetchMorePokemons}>Next</button>
-    </CardsArea>
+    <>
+      <CardsArea>
+        <CardsAreaBackground>
+          {pokemons.map(pokemon => <Card key={pokemon.name} {...pokemon} /> )}
+          <button onClick={fetchMorePokemons}>Next</button>
+        </CardsAreaBackground>
+      </CardsArea>
+    </>
   );
 }
