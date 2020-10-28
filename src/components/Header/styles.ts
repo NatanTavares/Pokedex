@@ -5,8 +5,9 @@ export const Container = styled.header`
   flex-direction: column;
   justify-content: center;
 
+  width: 97.8%;
   height: 82px;
-  width: 100%;
+  margin: 0 1.1%;
   padding: 0 4%;
 
   border-radius: 0 0 20px 20px;

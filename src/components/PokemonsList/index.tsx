@@ -54,11 +54,9 @@ export default function PokemonsList() {
   if (loading) return <h1>Loading...</h1>;
 
   return (
-    <div>
-      <CardsArea>
-        {pokemons.map(pokemon => <Card key={pokemon.name} {...pokemon} /> )}
-        <button onClick={fetchMorePokemons}>Next</button>
-      </CardsArea>
-    </div>
+    <CardsArea>
+      {pokemons.map(pokemon => <Card key={pokemon.name} {...pokemon} /> )}
+      <button onClick={fetchMorePokemons}>Next</button>
+    </CardsArea>
   );
 }

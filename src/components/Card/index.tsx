@@ -3,6 +3,8 @@ import api from '../../services/pokeapi';
 
 import { CardTemplate, LinkOnCard, ImagePokemon, TitleCard } from './styles';
 
+import PokemonStats from '../PokemonStats';
+
 interface IPokemonData {
   sprites: {
     other?: {
@@ -21,8 +23,8 @@ interface ICardProps {
 }
 
 export default function Card({ name, url }: ICardProps ) {
-  const [currentUrl, setCurrentUrl] = useState('');
   const [currentImage, setCurrentImage] = useState<string>('');
+  const [showStatsCurrentPokemon, setShowStatsCurrentPokemon] = useState(false);
 
   useEffect(() => {     
     api.get<IPokemonData>(url).then(response => {
@@ -35,12 +37,20 @@ export default function Card({ name, url }: ICardProps ) {
     });
   }, []);
 
+  function toggleShowStats() {
+    setShowStatsCurrentPokemon(!showStatsCurrentPokemon);
+  }
+
   return (
-    <CardTemplate key={name}>
-      <LinkOnCard href="">
-        <ImagePokemon src={currentImage} alt={`${name}`} width={90} />
-        <TitleCard>{name}</TitleCard>
-      </LinkOnCard>
-    </CardTemplate>
+    <>
+      <CardTemplate key={name} onClick={toggleShowStats}>
+        <LinkOnCard>
+          <ImagePokemon src={currentImage} alt={`${name}`} width={90} />
+          <TitleCard>{name}</TitleCard>
+        </LinkOnCard>
+      </CardTemplate>
+
+      {showStatsCurrentPokemon && <PokemonStats />}
+    </>
   );
 }

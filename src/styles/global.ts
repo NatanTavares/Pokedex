@@ -18,18 +18,14 @@ export default createGlobalStyle`
 
   ::-webkit-scrollbar {
     width: 12px;
-    height: 504px;
   }
 
   ::-webkit-scrollbar-track {
-    border: none;
-    border-radius: 5px;
     background-color: ${props => props.theme.colors.secondary};
+    border-radius: 5px;
   }
 
   ::-webkit-scrollbar-thumb {
-    width: 12px;
-    height: 35%;
     background-color: ${props => props.theme.colors.primary};
     border-radius: 5px;
   }
