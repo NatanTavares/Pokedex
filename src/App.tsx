@@ -11,15 +11,15 @@ import GlobalStyle from './styles/global';
 function App() {
   return (
     <AppThemeProvider>
-      <div className="App">
-        <GlobalStyle />
-        <Header />
-        <PokemonsList />
-        
-        <PokemonProvider>
+      <PokemonProvider>
+        <div className="App">
+          <GlobalStyle />
+          <Header />
+          <PokemonsList />
+          
           <PokemonStats />
-        </PokemonProvider>
-      </div>
+        </div>
+      </PokemonProvider>
     </AppThemeProvider>
   );
 }

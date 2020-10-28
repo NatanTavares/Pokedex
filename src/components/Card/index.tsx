@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import api from '../../services/pokeapi';
-import { PokemonContext, PokemonProvider } from '../../contexts/PokemonContext';
+import { PokemonContext } from '../../contexts/PokemonContext';
 
 import { CardTemplate, LinkOnCard, ImagePokemon, TitleCard } from './styles';
 
@@ -42,14 +42,12 @@ export default function Card({ name, url }: ICardProps ) {
 
   return (
     <>
-      <PokemonProvider>
-        <CardTemplate key={name} onClick={getCurrentUrl}>
-          <LinkOnCard>
-            <ImagePokemon src={currentImage} alt={`${name}`} width={90} />
-            <TitleCard>{name}</TitleCard>
-          </LinkOnCard>
-        </CardTemplate>
-      </PokemonProvider>
+      <CardTemplate key={name} onClick={getCurrentUrl}>
+        <LinkOnCard>
+          <ImagePokemon src={currentImage} alt={`${name}`} width={90} />
+          <TitleCard>{name}</TitleCard>
+        </LinkOnCard>
+      </CardTemplate>
     </>
   );
 }

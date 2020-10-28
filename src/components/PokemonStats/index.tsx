@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { ProgressBar, StatsScreen, CardPokemon, StatsArea, Stat, ImagePokemon, TypePokemon } from './styles'
-import api from '../../services/pokeapi';
-import { PokemonContext, PokemonProvider } from '../../contexts/PokemonContext';
+
+import { PokemonContext } from '../../contexts/PokemonContext';
+import Axios from 'axios';
 
 interface IStats {
   base_stat: number,
@@ -40,14 +41,9 @@ export default function PokemonStats() {
   const [types, setTypes] = useState<ITypes[]>([]);
 
   const context = useContext(PokemonContext);
-  
-  if (context?.url) {
-    alert('Chegou');
-    console.log('> Url:', context?.url);
-  }
 
   useEffect(() => {
-    api.get<IResponse>(context?.url || 'pokemon/1').then(response => {
+    Axios.get<IResponse>(context?.url || 'pokemon/1').then(response => {
       // Image with higher quality but unfortunately not all pokemons have
       const currentImg = response.data.sprites.other?.dream_world.front_default
       || response.data.sprites.front_default; 
