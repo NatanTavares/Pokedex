@@ -12,8 +12,8 @@ declare module 'styled-components' {
       background: string;
       text: string;
 
-      areaCard?: '#999',
-      card: '#444',
+      areaCard?: string,
+      card: string,
 
       switch: {
         on: string;

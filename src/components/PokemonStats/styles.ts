@@ -18,6 +18,12 @@ export const StatsScreen = styled.section`
   color: #fff;
 `;
 
+export const IconZone = styled.section`
+  position: absolute;
+  top: 1.5%;
+  left: 2%;
+`;
+
 export const CardPokemon = styled.div`
   padding: 8%;
   margin: 6%;
