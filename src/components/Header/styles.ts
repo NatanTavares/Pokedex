@@ -6,12 +6,14 @@ export const Container = styled.header`
   justify-content: center;
 
   height: 82px;
+  width: 100%;
   padding: 0 4%;
 
   border-radius: 0 0 20px 20px;
   box-shadow: 0 25px 65px rgba(0, 0, 0, .15);
 
-  background-color: ${props => props.theme.colors.primary}; 
+  background-color: ${props => props.theme.colors.primary};
+  position: fixed;
 `;
 
 export const WrapMenu = styled.ul`
@@ -23,7 +25,7 @@ export const WrapMenu = styled.ul`
   list-style-type: none;
 `;
 
-export const ItemMenu = styled.a`
-  text-decoration: none;
+export const ItemMenu = styled.span`
   color: ${props => props.theme.colors.text};
+  cursor: pointer;
 `;

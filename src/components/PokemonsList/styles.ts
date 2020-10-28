@@ -4,5 +4,6 @@ export const CardsArea = styled.ul`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin:0 0 6% 8.3%;
+  margin: 0 0 0% 8.3%;
+  padding: 82px 0;
 `;

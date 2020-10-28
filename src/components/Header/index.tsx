@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Switch from 'react-switch';
 import { ThemeContext } from '../../contexts/ThemeContext';
-
+import { animateScroll } from 'react-scroll';
 import { Container, WrapMenu, ItemMenu } from './styles';
 
 import pokeball_icon from '../../assets/pokeball_icon.png';
@@ -15,12 +15,12 @@ function Header() {
       <nav>
         <WrapMenu>
           <li>
-            <ItemMenu href="">
+            <ItemMenu>
               <img src={pokeball_icon} alt="menu" width={50} />
             </ItemMenu>
           </li>
           <li>
-            <ItemMenu href="">
+            <ItemMenu onClick={() => animateScroll.scrollToTop()} >
               <img src={logo_pokedex} alt="pokedex" />
             </ItemMenu>
           </li>

@@ -13,4 +13,24 @@ export default createGlobalStyle`
     font-family: sans-serif;
     background-color: ${props => props.theme.colors.background};
   }
+
+  /* marin right 8.3% */
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 504px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border: none;
+    border-radius: 5px;
+    background-color: ${props => props.theme.colors.secondary};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    width: 12px;
+    height: 35%;
+    background-color: ${props => props.theme.colors.primary};
+    border-radius: 5px;
+  }
 `;
