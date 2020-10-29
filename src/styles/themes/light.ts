@@ -11,6 +11,8 @@ export default {
     areaCard: '#E1E3E2',
     card: '#BBB',
 
+    boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.1)',
+
     switch: {
       on: '#B22222',
       off: '#C3C3C3',

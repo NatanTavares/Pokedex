@@ -22,11 +22,13 @@ export const IconZone = styled.section`
   position: absolute;
   top: 1.5%;
   left: 2%;
+  cursor: pointer;
 `;
 
 export const CardPokemon = styled.div`
   padding: 8%;
   margin: 6%;
+  height: 55%;
   
   border-radius: 20px;
 

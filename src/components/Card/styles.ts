@@ -10,6 +10,12 @@ export const CardTemplate = styled.li`
   border-radius: 20px;
 
   margin: 23px 18px;
+  cursor: pointer;
+
+  :hover {
+    transition: 300ms;
+    box-shadow: ${props => props.theme.colors.boxShadow};
+  }
 `;
 
 export const LinkOnCard = styled.a`

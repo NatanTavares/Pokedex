@@ -19,5 +19,5 @@ export const CardsAreaBackground = styled.div`
   width: auto;
 
   background-color: ${props => props.theme.colors.areaCard};
-  box-shadow: 0px 25px 65px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 45px 65px rgba(0, 0, 0, 0.15);
 `;

@@ -46,17 +46,19 @@ export default function PokemonStats() {
   const context = useContext(PokemonContext);
 
   useEffect(() => {
-    Axios.get<IResponse>(context?.url || 'pokemon/1').then(response => {
-      setShowStats(true);
-      // Image with higher quality but unfortunately not all pokemons have
-      const currentImg = response.data.sprites.other?.dream_world.front_default
-      || response.data.sprites.front_default; 
-
-      setName(response.data.species.name);
-      setImg(currentImg);
-      setStats(response.data.stats);
-      setTypes(response.data.types);
-    });
+    if (context?.url) {
+      Axios.get<IResponse>(context!.url).then(response => {
+        setShowStats(true);
+        // Image with higher quality but unfortunately not all pokemons have
+        const currentImg = response.data.sprites.other?.dream_world.front_default
+        || response.data.sprites.front_default; 
+  
+        setName(response.data.species.name);
+        setImg(currentImg);
+        setStats(response.data.stats);
+        setTypes(response.data.types);
+      });
+    }
   }, [context?.url]);
 
   return (

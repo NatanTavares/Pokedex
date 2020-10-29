@@ -15,6 +15,8 @@ declare module 'styled-components' {
       areaCard?: string,
       card: string,
 
+      boxShadow?: any;
+
       switch: {
         on: string;
         off: string;

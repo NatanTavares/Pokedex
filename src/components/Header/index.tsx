@@ -10,13 +10,18 @@ import logo_pokedex from '../../assets/logo_pokedex.svg';
 function Header() {
   const context = useContext(ThemeContext);
 
+  function refresPage() {
+    const result = window.confirm("This guide will be recharged! Are you sure about this?");
+    if (result) window.location.reload();
+  }
+
   return (
     <Container>
       <nav>
         <WrapMenu>
           <li>
             <ItemMenu>
-              <img src={pokeball_icon} alt="menu" width={50} />
+              <img src={pokeball_icon} alt="menu" width={50} onClick={event => refresPage()} />
             </ItemMenu>
           </li>
           <li>
