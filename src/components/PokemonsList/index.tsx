@@ -3,6 +3,7 @@ import Axios, { Canceler } from 'axios';
 import api from '../../services/pokeapi';
 
 import Card from '../Card';
+import SpinnerLoader from '../SpinnerLoader';
 
 import { CardsArea, CardsAreaBackground } from './styles';
 
@@ -29,35 +30,50 @@ export default function PokemonsList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetchPokemons();
+  }, [currentUrl]);
+
+  function fetchPokemons() {
     setLoading(true);
     let cancel: Canceler;
 
     api.get<IResourcePokemon>(currentUrl, {
       cancelToken: new Axios.CancelToken(c => cancel = c)
     }).then(response => {
-      setLoading(false);
       setNextUrl(response.data.next);
-      
       const newPokemons = response.data.results.map(pokemon => pokemon);
       
       setPokemons([...pokemons, ...newPokemons]);
+      setLoading(false);
     });
 
     return () => cancel();
-  }, [currentUrl]);
+  }
 
-  function fetchMorePokemons() {
+  function handleScroll() {   
+    if (!nextUrl || loading || window.innerHeight + document.documentElement.scrollTop < 
+      document.documentElement.offsetHeight) {
+      return;
+    }
+    loadMorePokemons();
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  function loadMorePokemons() {
     setCurrentUrl(nextUrl);
   }
 
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <SpinnerLoader />;
 
   return (
     <>
       <CardsArea>
         <CardsAreaBackground>
           {pokemons.map(pokemon => <Card key={pokemon.name} {...pokemon} /> )}
-          <button onClick={fetchMorePokemons}>Next</button>
         </CardsAreaBackground>
       </CardsArea>
     </>
