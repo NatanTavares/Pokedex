@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { devices } from '../../styles/mediaQueries';
 
 export const StatsScreen = styled.section`
   position: fixed;
@@ -26,9 +27,10 @@ export const IconZone = styled.section`
 `;
 
 export const CardPokemon = styled.div`
-  padding: 8%;
-  margin: 6%;
-  height: 55%;
+  padding: 6%;
+  margin: 5%;
+  max-height: 60%;
+  min-height: 45%;
   
   border-radius: 20px;
 

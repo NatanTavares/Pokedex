@@ -14,7 +14,7 @@ const ThemeContext = createContext<ContextValue | undefined>(void 0);
 
 const AppThemeProvider: React.FC = ({ children }) => {
   
-  const [theme, setTheme] = usePeristedState<DefaultTheme>('theme', dark);
+  const [theme, setTheme] = usePeristedState<DefaultTheme>('theme', light);
 
   const toggleTheme = () => {
     setTheme(theme.title === 'dark' ? light : dark);
