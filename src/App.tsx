@@ -1,26 +1,25 @@
 import React from 'react';
-import { AppThemeProvider } from './contexts/ThemeContext';
-import { PokemonProvider } from './contexts/PokemonContext';
-
-import Header from './components/Header';
-import PokemonsList from './components/PokemonsList';
-import PokemonStats from './components/PokemonStats';
-
-import GlobalStyle from './styles/global';
+import logo from './logo.svg';
+import './App.css';
 
 function App() {
   return (
-    <AppThemeProvider>
-      <PokemonProvider>
-        <div className="App">
-          <GlobalStyle />
-          <Header />
-          <PokemonsList />
-          
-          <PokemonStats />
-        </div>
-      </PokemonProvider>
-    </AppThemeProvider>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
   );
 }
 
