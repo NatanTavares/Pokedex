@@ -11,6 +11,7 @@ const Container = styled.header`
     
     color: ${theme.palette.primary.contrast};
     background: ${theme.palette.primary.main};
+    box-shadow: 0 0 10px 10px ${theme.palette.shadow};
   `};
 `;
 

@@ -1,12 +1,16 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import { GlobalStyle } from "../styles/global";
+import { createContext, ReactNode, useContext } from "react";
 import { ThemeProvider } from "styled-components";
+import { DefaultTheme } from "styled-components";
+import useLocalStorage from "./useLocalStorage";
 
+import { GlobalStyle } from "../styles/global";
 import { light } from "../styles/themes/light";
 import { dark } from "../styles/themes/dark";
 
 type ContextType = {
-  onChangeTheme: () => void;
+  changeToDark: () => void;
+  changeToLight: () => void;
+  checked: boolean;
 };
 
 type ProviderProps = {
@@ -16,14 +20,24 @@ type ProviderProps = {
 const ThemeContext = createContext({} as ContextType);
 
 export function UseThemeProvider({ children }: ProviderProps) {
-  const [theme, setTheme] = useState(light);
+  const [theme, setTheme] = useLocalStorage<DefaultTheme>("@theme", dark);
+  const [checked, setChecked] = useLocalStorage<boolean>(
+    "@theme-checked",
+    true
+  );
 
-  function onChangeTheme() {
-    setTheme(theme === light ? dark : light);
+  function changeToDark() {
+    setChecked(true);
+    setTheme(dark);
+  }
+
+  function changeToLight() {
+    setChecked(false);
+    setTheme(light);
   }
 
   return (
-    <ThemeContext.Provider value={{ onChangeTheme }}>
+    <ThemeContext.Provider value={{ changeToDark, changeToLight, checked }}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         {children}

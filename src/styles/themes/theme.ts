@@ -15,5 +15,6 @@ export const defaultTheme: DefaultTheme = {
       main: "#d53b47",
       contrast: "#F6F6F7",
     },
+    shadow: "rgba(0, 0, 0, 0.1)",
   },
 };

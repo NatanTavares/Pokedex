@@ -18,6 +18,7 @@ declare module "styled-components" {
       bg: string;
       contrast: string;
       primary: IPlatte;
+      shadow: string;
     };
   }
 }
