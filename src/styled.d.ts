@@ -18,6 +18,10 @@ declare module "styled-components" {
       bg: string;
       contrast: string;
       primary: IPlatte;
+      disabled: {
+        bg: string;
+        contrast: string;
+      };
       shadow: string;
     };
   }
