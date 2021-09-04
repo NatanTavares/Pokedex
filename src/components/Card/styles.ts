@@ -26,7 +26,8 @@ const Container = styled.div`
   }
 
   img {
-    max-width: 5rem;
+    max-width: 7.5rem;
+    max-height: 5.5rem;
   }
 
   h1 {
