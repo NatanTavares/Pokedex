@@ -7,7 +7,8 @@ const Container = styled.section`
   flex-wrap: wrap;
   gap: 2rem;
 
-  margin: 2rem 2vw;
+  max-width: 1300px;
+  margin: 2rem auto;
   padding: 0 2vw;
 
   overflow: auto;
