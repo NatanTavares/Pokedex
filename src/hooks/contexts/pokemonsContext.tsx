@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { useRouting } from "../useRouting";
 
 import { api } from "../../services/api";
@@ -63,6 +63,7 @@ type ResponseList = {
 type ContextType = {
   loading: boolean;
   pokemons: Pokemon[];
+  fetchPokemonsPage: (currentPage: number) => void;
 };
 
 type ProviderProps = {
@@ -75,8 +76,7 @@ export function PokemonsProvider({ children }: ProviderProps) {
   const [loading, setLoading] = useState(false);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
-  const { buildPagingUrl, currentPage, onSetTotalCountOfRegister } =
-    useRouting();
+  const { buildPagingUrl, onSetTotalCountOfRegister } = useRouting();
 
   async function fetchPokemon({ results }: ResponseList) {
     try {
@@ -111,13 +111,8 @@ export function PokemonsProvider({ children }: ProviderProps) {
     }
   }
 
-  useEffect(() => {
-    fetchPokemonsPage(currentPage);
-    //eslint-disable-next-line
-  }, []);
-
   return (
-    <PokemonsContext.Provider value={{ loading, pokemons }}>
+    <PokemonsContext.Provider value={{ loading, pokemons, fetchPokemonsPage }}>
       {children}
     </PokemonsContext.Provider>
   );
