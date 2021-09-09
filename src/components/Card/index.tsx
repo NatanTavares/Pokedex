@@ -1,15 +1,19 @@
-import { Container } from "./styles";
+import { Container, Types } from "./styles";
 
-type Props = {
-  name: string;
-  url: string;
-};
-
-export function Card({ name, url }: Props) {
+export function Card() {
   return (
     <Container>
-      <img src={url} alt={name} />
-      <h1>{name}</h1>
+      <img
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/6.svg"
+        alt="Charizard"
+      />
+      <div>
+        <h1>Charizard</h1>
+        <Types>
+          <span>Flying</span>
+          <span>Fire</span>
+        </Types>
+      </div>
     </Container>
   );
 }
