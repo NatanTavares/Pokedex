@@ -1,4 +1,5 @@
 import { PaginationItem } from "./paginationItem";
+import { useRouting } from "../../hooks/useRouting";
 
 import { Container } from "./styles";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -7,7 +8,6 @@ type Props = {
   totalCountOfRegisters: number;
   registerPerPage?: number;
   currentPage?: number;
-  onPageChange: (page: number) => void;
 };
 
 const siblingsCount = 2;
@@ -24,9 +24,9 @@ export function Pagination({
   totalCountOfRegisters,
   registerPerPage = 10,
   currentPage = 1,
-  onPageChange,
 }: Props) {
-  const lastPage = Math.floor(totalCountOfRegisters / registerPerPage);
+  const { handlePreviousPage, handleNextPage } = useRouting();
+  const lastPage = Math.floor(totalCountOfRegisters / registerPerPage) + 1;
 
   const previousPages =
     currentPage > 1
@@ -44,31 +44,23 @@ export function Pagination({
   return (
     <Container>
       <PaginationItem
-        disabled={currentPage === 1}
-        onPageChange={onPageChange}
+        disabled={currentPage <= 1}
+        handleClick={handlePreviousPage}
         Icon={IoIosArrowBack}
         index={currentPage - 1}
       />
 
       {previousPages.length > 0 &&
-        previousPages.map((page) => (
-          <PaginationItem onPageChange={onPageChange} key={page} index={page} />
-        ))}
+        previousPages.map((page) => <PaginationItem key={page} index={page} />)}
 
-      <PaginationItem
-        onPageChange={onPageChange}
-        isCurrent
-        index={currentPage}
-      />
+      <PaginationItem isCurrent index={currentPage} />
 
       {nextPage.length > 0 &&
-        nextPage.map((page) => (
-          <PaginationItem onPageChange={onPageChange} key={page} index={page} />
-        ))}
+        nextPage.map((page) => <PaginationItem key={page} index={page} />)}
 
       <PaginationItem
-        disabled={currentPage === lastPage}
-        onPageChange={onPageChange}
+        disabled={currentPage >= lastPage}
+        handleClick={handleNextPage}
         Icon={IoIosArrowForward}
         index={currentPage + 1}
       />

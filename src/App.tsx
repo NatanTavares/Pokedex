@@ -1,21 +1,16 @@
-import { Pagination } from "./components/Pagination";
-import { Header } from "./components/Header";
-import { Grid } from "./components/Grid";
+import { Switch, Route } from "react-router-dom";
+import { Details } from "./pages/details";
+import { Home } from "./pages/home";
 
-import { Container } from "./styles/home";
-
-function App() {
+export default function App() {
   return (
-    <Container>
-      <Header />
-      <Grid />
-      <Pagination
-        totalCountOfRegisters={50}
-        currentPage={3}
-        onPageChange={() => {}}
-      />
-    </Container>
+    <Switch>
+      <Route path="/details">
+        <Details />
+      </Route>
+      <Route path="/">
+        <Home />
+      </Route>
+    </Switch>
   );
 }
-
-export default App;

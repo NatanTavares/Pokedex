@@ -1,11 +1,13 @@
+import { useRouting } from "../../hooks/useRouting";
 import { IconType } from "react-icons";
+import { useHistory } from "react-router-dom";
 
-type PaginationItemProps = {
+type Props = {
   disabled?: boolean;
   isCurrent?: boolean;
   Icon?: IconType;
   index: number;
-  onPageChange: (page: number) => void;
+  handleClick?: () => void;
 };
 
 export function PaginationItem({
@@ -13,11 +15,21 @@ export function PaginationItem({
   isCurrent = false,
   Icon,
   index,
-  onPageChange,
-}: PaginationItemProps) {
+  handleClick,
+}: Props) {
+  const { onSetCurrentPage } = useRouting();
+  const history = useHistory();
+
   if (!!Icon) {
     return (
-      <button disabled={disabled}>
+      <button
+        disabled={disabled}
+        onClick={() => {
+          handleClick && handleClick();
+          history.push(`/?page=${index}`);
+          window.location.reload();
+        }}
+      >
         <Icon size={16} />
       </button>
     );
@@ -27,5 +39,15 @@ export function PaginationItem({
     return <button className="isCurrent">{index}</button>;
   }
 
-  return <button onClick={() => onPageChange(index)}>{index}</button>;
+  return (
+    <button
+      onClick={() => {
+        onSetCurrentPage(index);
+        history.push(`/?page=${index}`);
+        window.location.reload();
+      }}
+    >
+      {index}
+    </button>
+  );
 }
