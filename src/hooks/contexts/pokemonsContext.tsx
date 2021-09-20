@@ -3,13 +3,40 @@ import { useRouting } from "../useRouting";
 
 import { api } from "../../services/api";
 
-type RawPokemon = {
+type ContextType = {
+  loading: boolean;
+  listOfPokemons: listOfPokemons;
+  pokemon: Pokemon;
+  fetchPokemon: (name: string) => Promise<void>;
+  fetchPokemonsPage: (currentPage: number) => Promise<void>;
+};
+
+type ProviderProps = {
+  children: ReactNode;
+};
+
+type Stat = {
+  base_stat: number;
+  name: "HP" | "ATK" | "DEF" | "SPD" | "EXP";
+};
+
+type Pokemon = {
+  base_experience: number;
+  id: number;
+  name: string;
+  sprite: string | null;
+  stats: Stat[];
+  types: string[];
+};
+
+type rawPokemonResponse = {
+  base_experience: number;
   id: number;
   name: string;
   sprites: {
     other: {
       dream_world: {
-        front_default: string;
+        front_default: string | null;
       };
     };
   };
@@ -26,70 +53,91 @@ type RawPokemon = {
   types: [
     {
       slot: number;
-      type: { name: string; url: string };
+      type: {
+        name: string;
+        url: string;
+      };
     }
   ];
 };
 
-type Pokemon = {
+type listOfPokemons = {
   id: number;
   name: string;
-  imageUrl: string;
-  stats: [
-    {
-      base_stat: number;
-      effort: number;
-      stat: { name: string; url: string };
-    }
-  ];
-  types: [
-    {
-      slot: number;
-      type: { name: string; url: string };
-    }
-  ];
-};
+  sprite: string | null;
+}[];
 
-type ResponseList = {
+type Results = {
+  name: string;
+  url: string;
+}[];
+
+type ResponseListOfPokemons = {
   count: number;
-  results: [
-    {
-      name: string;
-      url: string;
-    }
-  ];
-};
-
-type ContextType = {
-  loading: boolean;
-  pokemons: Pokemon[];
-  fetchPokemonsPage: (currentPage: number) => void;
-};
-
-type ProviderProps = {
-  children: ReactNode;
+  results: Results;
 };
 
 export const PokemonsContext = createContext({} as ContextType);
 
 export function PokemonsProvider({ children }: ProviderProps) {
-  const [loading, setLoading] = useState(false);
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [pokemon, setPokemon] = useState({} as Pokemon);
+  const [listOfPokemons, setListOfPokemons] = useState<listOfPokemons>([]);
 
   const { buildPagingUrl, onSetTotalCountOfRegister } = useRouting();
 
-  async function fetchPokemon({ results }: ResponseList) {
+  async function fetchPokemon(name: string) {
+    setLoading(true);
     try {
-      results.forEach(async (currentPokemon) => {
-        const { data } = await api.get<RawPokemon>(`${currentPokemon.name}`);
-        const pokemon = {
+      const { data } = await api.get<rawPokemonResponse>(name);
+      const types = data.types.reduce<string[]>(
+        (prev, { type }) => [...prev, type.name],
+        []
+      );
+
+      const stats = data.stats.reduce<Stat[]>((prev, { base_stat, stat }) => {
+        switch (stat.name) {
+          case "hp":
+            return [...prev, { name: "HP", base_stat }];
+          case "attack":
+            return [...prev, { name: "ATK", base_stat }];
+          case "defense":
+            return [...prev, { name: "DEF", base_stat }];
+          case "speed":
+            return [...prev, { name: "SPD", base_stat }];
+          default:
+            return prev;
+        }
+      }, []);
+
+      const formattedData = {
+        base_experience: data.base_experience,
+        id: data.id,
+        name: data.name,
+        sprite: data.sprites.other.dream_world.front_default,
+        stats: stats.concat({ name: "EXP", base_stat: data.base_experience }),
+        types,
+      };
+
+      setPokemon(formattedData);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
+  }
+
+  async function createListOfPokemons(results: Results) {
+    try {
+      setListOfPokemons([]);
+      results.forEach(async ({ name }) => {
+        const { data } = await api.get<rawPokemonResponse>(name);
+        const formattedData = {
           id: data.id,
           name: data.name,
-          imageUrl: data.sprites.other.dream_world.front_default,
-          stats: data.stats,
-          types: data.types,
+          sprite: data.sprites.other.dream_world.front_default,
         };
-        setPokemons((prev) => [...prev, pokemon]);
+        setListOfPokemons((prev) => [...prev, formattedData]);
       });
     } catch (e) {
       console.log(e);
@@ -98,21 +146,31 @@ export function PokemonsProvider({ children }: ProviderProps) {
 
   async function fetchPokemonsPage(page: number) {
     setLoading(true);
-
     try {
-      const { data } = await api.get<ResponseList>(buildPagingUrl({ page }));
+      const { data } = await api.get<ResponseListOfPokemons>(
+        buildPagingUrl({ page })
+      );
       onSetTotalCountOfRegister(data.count);
-      await fetchPokemon(data);
+
+      await createListOfPokemons(data.results);
 
       setLoading(false);
     } catch (e) {
-      console.log(e);
       setLoading(false);
+      console.log(e);
     }
   }
 
   return (
-    <PokemonsContext.Provider value={{ loading, pokemons, fetchPokemonsPage }}>
+    <PokemonsContext.Provider
+      value={{
+        loading,
+        listOfPokemons,
+        pokemon,
+        fetchPokemon,
+        fetchPokemonsPage,
+      }}
+    >
       {children}
     </PokemonsContext.Provider>
   );
