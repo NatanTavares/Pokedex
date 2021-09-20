@@ -1,7 +1,8 @@
 import { createContext, ReactNode, useState } from "react";
 import { useRouting } from "../useRouting";
-
 import { api } from "../../services/api";
+
+import Ball from "../../assets/ball-icon.jpeg";
 
 type ContextType = {
   loading: boolean;
@@ -24,7 +25,7 @@ type Pokemon = {
   base_experience: number;
   id: number;
   name: string;
-  sprite: string | null;
+  sprite: string;
   stats: Stat[];
   types: string[];
 };
@@ -114,7 +115,7 @@ export function PokemonsProvider({ children }: ProviderProps) {
         base_experience: data.base_experience,
         id: data.id,
         name: data.name,
-        sprite: data.sprites.other.dream_world.front_default,
+        sprite: data.sprites.other.dream_world.front_default || Ball,
         stats: stats.concat({ name: "EXP", base_stat: data.base_experience }),
         types,
       };
@@ -135,7 +136,7 @@ export function PokemonsProvider({ children }: ProviderProps) {
         const formattedData = {
           id: data.id,
           name: data.name,
-          sprite: data.sprites.other.dream_world.front_default,
+          sprite: data.sprites.other.dream_world.front_default || Ball,
         };
         setListOfPokemons((prev) => [...prev, formattedData]);
       });

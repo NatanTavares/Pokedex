@@ -1,15 +1,15 @@
 import { Container, Types } from "./styles";
 
 type Props = {
-  url: string | null;
-  name?: string;
-  types?: string[];
+  url: string;
+  name: string;
+  types: string[];
 };
 
 export function Card({ url, name, types }: Props) {
   return (
     <Container>
-      <img src={url || ""} alt={name} />
+      <img src={url} alt={name} />
       <div>
         <h1>{name}</h1>
 
