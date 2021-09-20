@@ -23,6 +23,13 @@ declare module "styled-components" {
         contrast: string;
       };
       shadow: string;
+      typesStats: {
+        hp: string;
+        atk: string;
+        def: string;
+        spd: string;
+        exp: string;
+      };
     };
   }
 }
