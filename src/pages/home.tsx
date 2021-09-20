@@ -10,7 +10,7 @@ import { usePokemon } from "../hooks/usePokemon";
 
 export function Home() {
   const { currentPage, registerPerPage, totalCountOfRegisters } = useRouting();
-  const { fetchPokemonsPage } = usePokemon();
+  const { fetchPokemonsPage, loading } = usePokemon();
 
   useEffect(() => {
     fetchPokemonsPage(currentPage);
@@ -20,12 +20,16 @@ export function Home() {
   return (
     <Container>
       <Header />
-      <Grid />
-      <Pagination
-        totalCountOfRegisters={totalCountOfRegisters}
-        registerPerPage={registerPerPage}
-        currentPage={currentPage}
-      />
+      {!loading && (
+        <>
+          <Grid />
+          <Pagination
+            totalCountOfRegisters={totalCountOfRegisters}
+            registerPerPage={registerPerPage}
+            currentPage={currentPage}
+          />
+        </>
+      )}
     </Container>
   );
 }
