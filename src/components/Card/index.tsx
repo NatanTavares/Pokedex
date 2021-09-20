@@ -1,17 +1,22 @@
 import { Container, Types } from "./styles";
 
-export function Card() {
+type Props = {
+  url: string | null;
+  name?: string;
+  types?: string[];
+};
+
+export function Card({ url, name, types }: Props) {
   return (
     <Container>
-      <img
-        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/6.svg"
-        alt="Charizard"
-      />
+      <img src={url || ""} alt={name} />
       <div>
-        <h1>Charizard</h1>
+        <h1>{name}</h1>
+
         <Types>
-          <span>Flying</span>
-          <span>Fire</span>
+          {types?.map((type) => (
+            <span key={type}>{type}</span>
+          ))}
         </Types>
       </div>
     </Container>

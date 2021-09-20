@@ -4,12 +4,12 @@ import { CardItem } from "../CardItem";
 import { Container } from "./styles";
 
 export function Grid() {
-  const { pokemons } = usePokemon();
+  const { listOfPokemons } = usePokemon();
 
   return (
     <Container>
-      {pokemons.map((pokemon) => (
-        <CardItem key={pokemon.id} name={pokemon.name} url={pokemon.imageUrl} />
+      {listOfPokemons.map(({ id, name, sprite }) => (
+        <CardItem key={id} name={name} url={sprite} />
       ))}
     </Container>
   );
