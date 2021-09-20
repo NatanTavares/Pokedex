@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { useRouting } from "../useRouting";
 import { api } from "../../services/api";
+import { toast } from "react-toastify";
 
 import Ball from "../../assets/ball-icon.jpeg";
 
@@ -122,15 +123,24 @@ export function PokemonsProvider({ children }: ProviderProps) {
 
       setPokemon(formattedData);
       setLoading(false);
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      toast.error("Falha ao consumir os dados", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+      });
+      console.error(err);
       setLoading(false);
     }
   }
 
   async function createListOfPokemons(results: Results) {
+    setLoading(true);
     try {
       setListOfPokemons([]);
+
       results.forEach(async ({ name }) => {
         const { data } = await api.get<rawPokemonResponse>(name);
         const formattedData = {
@@ -138,10 +148,22 @@ export function PokemonsProvider({ children }: ProviderProps) {
           name: data.name,
           sprite: data.sprites.other.dream_world.front_default || Ball,
         };
+
         setListOfPokemons((prev) => [...prev, formattedData]);
       });
-    } catch (e) {
-      console.log(e);
+
+      setLoading(false);
+    } catch (err) {
+      toast.error("Falha ao listar os pokemons", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+      });
+      console.error(err);
+
+      setLoading(false);
     }
   }
 
@@ -151,14 +173,21 @@ export function PokemonsProvider({ children }: ProviderProps) {
       const { data } = await api.get<ResponseListOfPokemons>(
         buildPagingUrl({ page })
       );
-      onSetTotalCountOfRegister(data.count);
 
+      onSetTotalCountOfRegister(data.count);
       await createListOfPokemons(data.results);
 
       setLoading(false);
-    } catch (e) {
+    } catch (err) {
+      toast.error("Falha ao listar os pokemons", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+      });
+      console.error(err);
       setLoading(false);
-      console.log(e);
     }
   }
 
