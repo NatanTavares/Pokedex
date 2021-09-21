@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useRouting } from "../useRouting";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
@@ -174,9 +174,10 @@ export function PokemonsProvider({ children }: ProviderProps) {
         buildPagingUrl({ page })
       );
 
-      onSetTotalCountOfRegister(data.count);
-      await createListOfPokemons(data.results);
+      sessionStorage.setItem("@pokedex:totalOfRegistes", String(data.count));
+      data.count !== 0 && onSetTotalCountOfRegister(data.count);
 
+      await createListOfPokemons(data.results);
       setLoading(false);
     } catch (err) {
       toast.error("Falha ao listar os pokemons", {
@@ -190,6 +191,13 @@ export function PokemonsProvider({ children }: ProviderProps) {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    const total = Number(sessionStorage.getItem("@pokedex:totalOfRegistes"));
+    onSetTotalCountOfRegister(total);
+
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <PokemonsContext.Provider
