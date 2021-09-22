@@ -12,6 +12,7 @@ const Container = styled(motion.div)`
 
   cursor: pointer;
   transition: filter 0.2s;
+  text-transform: capitalize;
 
   ${({ theme }) => `
     padding: ${theme.scales.padding.lg};

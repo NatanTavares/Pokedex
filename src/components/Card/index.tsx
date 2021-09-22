@@ -1,4 +1,4 @@
-import { Container, Types } from "./styles";
+import { Container, Span, Types } from "./styles";
 
 type Props = {
   url: string;
@@ -8,14 +8,16 @@ type Props = {
 
 export function Card({ url, name, types }: Props) {
   return (
-    <Container>
+    <Container type={!!types ? types[0] : ""}>
       <img src={url} alt={name} />
       <div>
         <h1>{name}</h1>
 
         <Types>
           {types?.map((type) => (
-            <span key={type}>{type}</span>
+            <Span type={type} key={type}>
+              {type}
+            </Span>
           ))}
         </Types>
       </div>

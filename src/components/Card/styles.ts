@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const Container = styled.div`
+type Props = {
+  type: string;
+};
+
+const Container = styled.div<Props>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,7 +18,50 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius};
   box-shadow: 0 0 10px 4px ${({ theme }) => theme.palette.shadow};
 
-  background: #f8a060;
+  text-transform: capitalize;
+
+  background: ${({ theme, type }) => {
+    switch (type) {
+      case "bug":
+        return theme.palette.typeOfPokemon.bug;
+      case "dark":
+        return theme.palette.typeOfPokemon.dark;
+      case "dragon":
+        return theme.palette.typeOfPokemon.dragon;
+      case "electric":
+        return theme.palette.typeOfPokemon.electric;
+      case "fairy":
+        return theme.palette.typeOfPokemon.fairy;
+      case "fighting":
+        return theme.palette.typeOfPokemon.fighting;
+      case "fire":
+        return theme.palette.typeOfPokemon.fire;
+      case "flying":
+        return theme.palette.typeOfPokemon.flying;
+      case "ghost":
+        return theme.palette.typeOfPokemon.ghost;
+      case "grass":
+        return theme.palette.typeOfPokemon.grass;
+      case "ground":
+        return theme.palette.typeOfPokemon.ground;
+      case "ice":
+        return theme.palette.typeOfPokemon.ice;
+      case "normal":
+        return theme.palette.typeOfPokemon.normal;
+      case "poison":
+        return theme.palette.typeOfPokemon.poison;
+      case "psychic":
+        return theme.palette.typeOfPokemon.psychic;
+      case "rock":
+        return theme.palette.typeOfPokemon.rock;
+      case "steel":
+        return theme.palette.typeOfPokemon.steel;
+      case "water":
+        return theme.palette.typeOfPokemon.water;
+      default:
+        return theme.palette.primary;
+    }
+  }};
 
   img {
     max-width: 15.625rem;
@@ -60,4 +107,63 @@ const Types = styled.div`
   }
 `;
 
-export { Container, Types };
+const Span = styled.span<Props>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 15.625rem;
+  height: 2rem;
+
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: white;
+
+  /* text-transform: capitalize; */
+
+  border-radius: ${({ theme, type }) => theme.borderRadius};
+  color: ${({ theme, type }) => {
+    switch (type) {
+      case "bug":
+        return theme.palette.typeOfPokemon.bug;
+      case "dark":
+        return theme.palette.typeOfPokemon.dark;
+      case "dragon":
+        return theme.palette.typeOfPokemon.dragon;
+      case "electric":
+        return theme.palette.typeOfPokemon.electric;
+      case "fairy":
+        return theme.palette.typeOfPokemon.fairy;
+      case "fighting":
+        return theme.palette.typeOfPokemon.fighting;
+      case "fire":
+        return theme.palette.typeOfPokemon.fire;
+      case "flying":
+        return theme.palette.typeOfPokemon.flying;
+      case "ghost":
+        return theme.palette.typeOfPokemon.ghost;
+      case "grass":
+        return theme.palette.typeOfPokemon.grass;
+      case "ground":
+        return theme.palette.typeOfPokemon.ground;
+      case "ice":
+        return theme.palette.typeOfPokemon.ice;
+      case "normal":
+        return theme.palette.typeOfPokemon.normal;
+      case "poison":
+        return theme.palette.typeOfPokemon.poison;
+      case "psychic":
+        return theme.palette.typeOfPokemon.psychic;
+      case "rock":
+        return theme.palette.typeOfPokemon.rock;
+      case "steel":
+        return theme.palette.typeOfPokemon.steel;
+      case "water":
+        return theme.palette.typeOfPokemon.water;
+      default:
+        return theme.palette.primary;
+    }
+  }};
+`;
+
+export { Container, Types, Span };
