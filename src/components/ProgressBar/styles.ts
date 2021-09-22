@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
-type Props = {
+type ProgressProps = {
   percentage: number;
   bg: "HP" | "ATK" | "DEF" | "SPD" | "EXP";
 };
@@ -9,19 +10,19 @@ const Container = styled.div`
   height: 1.375rem;
 
   border-radius: 5px;
-  overflow: hidden;
 
   background: ${({ theme }) => theme.palette.contrast};
 `;
 
-const Progress = styled.div<Props>`
+const Progress = styled(motion.div)<ProgressProps>`
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: end;
 
-  width: ${({ percentage }) => percentage}%;
+  width: 0;
   height: 100%;
-  padding: 0 0.25rem;
 
   border-radius: 5px;
   background-color: ${({ bg, theme }) => {
@@ -38,11 +39,15 @@ const Progress = styled.div<Props>`
         return theme.palette.typesStats.spd;
     }
   }};
-
-  span {
-    color: white;
-    font-weight: bold;
-  }
 `;
 
-export { Container, Progress };
+const Span = styled.span`
+  position: absolute;
+  top: auto;
+  right: 0.125rem;
+
+  font-weight: bold;
+  color: white;
+`;
+
+export { Container, Span, Progress };
